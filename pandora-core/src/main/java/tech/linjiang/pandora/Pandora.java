@@ -21,6 +21,8 @@ public final class Pandora extends FileProvider implements SensorDetector.Callba
 
     private static Pandora INSTANCE;
 
+    private boolean hasInit;
+
     public Pandora() {
         if (INSTANCE != null) {
             throw new RuntimeException();
@@ -29,17 +31,12 @@ public final class Pandora extends FileProvider implements SensorDetector.Callba
 
     @Override
     public boolean onCreate() {
+        INSTANCE = this;
         return super.onCreate();
     }
 
-    public static Pandora init(Application app) {
-        INSTANCE = this;
+    public Pandora init(Application app) {
         Utils.init(app);
-        this.initOther(app);
-        return INSTANCE;
-    }
-
-    private void initOther(Application app) {
         funcController = new FuncController(app);
         sensorDetector = new SensorDetector(this);
         interceptor = new OkHttpInterceptor();
@@ -48,10 +45,19 @@ public final class Pandora extends FileProvider implements SensorDetector.Callba
         attrFactory = new AttrFactory();
         crashHandler = new CrashHandler();
         historyRecorder = new HistoryRecorder(app);
+        hasInit = true;
+        return INSTANCE;
     }
 
     public static Pandora get() {
-        if (INSTANCE == null) {
+        if (INSTANCE==null) {
+            throw new RuntimeException("need to call Pandora#init in Application#onCreate firstly.");
+        }
+        return INSTANCE;
+    }
+
+    public Pandora checkInit() {
+        if (!hasInit) {
             throw new RuntimeException("need to call Pandora#init in Application#onCreate firstly.");
         }
         return INSTANCE;
