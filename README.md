@@ -1,4 +1,4 @@
-EN | [中文](https://github.com/whataa/pandora/blob/master/README_CN.md)
+EN | [中文](./README_CN.md)
 
 <p align=center>
 <img src="https://i.loli.net/2019/03/15/5c8b6158be01e.png" width=40%>
