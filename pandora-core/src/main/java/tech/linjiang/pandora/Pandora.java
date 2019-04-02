@@ -35,6 +35,11 @@ public final class Pandora extends FileProvider implements SensorDetector.Callba
     public static Pandora init(Application app) {
         INSTANCE = this;
         Utils.init(app);
+        this.initOther(app);
+        return INSTANCE;
+    }
+
+    private void initOther(Application app) {
         funcController = new FuncController(app);
         sensorDetector = new SensorDetector(this);
         interceptor = new OkHttpInterceptor();
@@ -43,7 +48,6 @@ public final class Pandora extends FileProvider implements SensorDetector.Callba
         attrFactory = new AttrFactory();
         crashHandler = new CrashHandler();
         historyRecorder = new HistoryRecorder(app);
-        return INSTANCE;
     }
 
     public static Pandora get() {
