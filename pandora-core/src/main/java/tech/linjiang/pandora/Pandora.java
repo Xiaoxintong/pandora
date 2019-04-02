@@ -32,7 +32,7 @@ public final class Pandora extends FileProvider implements SensorDetector.Callba
         return super.onCreate();
     }
 
-    public void init(Application app) {
+    public static Pandora init(Application app) {
         INSTANCE = this;
         Utils.init(app);
         funcController = new FuncController(app);
@@ -43,6 +43,7 @@ public final class Pandora extends FileProvider implements SensorDetector.Callba
         attrFactory = new AttrFactory();
         crashHandler = new CrashHandler();
         historyRecorder = new HistoryRecorder(app);
+        return INSTANCE;
     }
 
     public static Pandora get() {
