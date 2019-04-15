@@ -43,7 +43,7 @@ public final class Pandora extends FileProvider implements SensorDetector.Callba
         databases = new Databases();
         sharedPref = new SharedPref();
         attrFactory = new AttrFactory();
-        crashHandler = new CrashHandler();
+        crashHandler = new CrashHandler(app);
         historyRecorder = new HistoryRecorder(app);
         hasInit = true;
         return INSTANCE;
