@@ -16,7 +16,6 @@
 package tech.linjiang.pandora.network.okhttp3.internal.huc;
 
 import java.io.IOException;
-
 import okio.Buffer;
 import okio.BufferedSink;
 import okio.Okio;
@@ -38,5 +37,10 @@ final class StreamedRequestBody extends OutputStreamRequestBody {
     while (pipe.source().read(buffer, 8192) != -1L) {
       sink.write(buffer, buffer.size());
     }
+  }
+
+  @Override
+  public boolean isOneShot() {
+    return true;
   }
 }

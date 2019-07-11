@@ -2,7 +2,8 @@ package tech.linjiang.pandora;
 
 import android.app.Activity;
 import android.app.Application;
-import android.support.v4.content.FileProvider;
+import androidx.core.content.FileProvider;
+import android.content.Context;
 
 import tech.linjiang.pandora.crash.CrashHandler;
 import tech.linjiang.pandora.database.Databases;
@@ -38,7 +39,7 @@ public final class Pandora extends FileProvider implements SensorDetector.Callba
     public Pandora init(Application app) {
         Utils.init(app);
         funcController = new FuncController(app);
-        sensorDetector = new SensorDetector(this);
+        sensorDetector = new SensorDetector(notHostProcess ? null : this);
         interceptor = new OkHttpInterceptor();
         databases = new Databases();
         sharedPref = new SharedPref();
@@ -63,6 +64,7 @@ public final class Pandora extends FileProvider implements SensorDetector.Callba
         return INSTANCE;
     }
 
+    private boolean notHostProcess;
     private OkHttpInterceptor interceptor;
     private Databases databases;
     private SharedPref sharedPref;
@@ -109,6 +111,9 @@ public final class Pandora extends FileProvider implements SensorDetector.Callba
      * Open the panel.
      */
     public void open() {
+        if (notHostProcess) {
+            return;
+        }
         funcController.open();
     }
 
